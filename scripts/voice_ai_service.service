@@ -1,0 +1,19 @@
+[Unit]
+Description=Voice AI Service
+Wants=network-online.target
+After=network-online.target
+Wants=systemd-timesyncd.service
+After=systemd-timesyncd.service
+
+[Service]
+Environment=DISPLAY=:0
+ExecStart=/usr/bin/python3 /home/pi/voice-ai-app/src/aiy/start.py
+WorkingDirectory=/home/pi/voice-ai-app
+User=pi
+Restart=always
+Environment="PULSE_SERVER=unix:/run/user/1000/pulse/native"
+Environment="PULSE_COOKIE=/run/pulse/cookie"
+
+
+[Install]
+WantedBy=multi-user.target
