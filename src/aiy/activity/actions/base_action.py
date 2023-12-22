@@ -23,6 +23,7 @@ class BaseActivity:
         recognition = ai_service.get_service().text_recognition(response.text)
         
         for intent in recognition.intents:
+            logging.info("Should process intent is: " + str(intent))
             if intent == StopActivity.activity_code():
                 logging.info("Detected stopping current activity: " + self.activity_code)
                 StopActivity().handleActivity(response)

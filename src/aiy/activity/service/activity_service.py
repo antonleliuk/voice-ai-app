@@ -36,9 +36,15 @@ def processAudio(audio_file_path):
 
 def _resolveActivity(response: EntityRecognitionResult) -> ActivityContext:
     if response.intents:
+        logging.info('Intents is: ' + str(response.intents))
         for intent in response.intents:
-            activity = _activityFactory.resolve_activity(intent)
-            return ActivityContext(activity, intent)
+            try:
+                logging.info('Trying to resolve activity for intent: ' + str(intent))
+                activity = _activityFactory.resolve_activity(intent)
+                logging.info('Resolving activity: ' + str(activity))
+                return ActivityContext(activity, intent)
+            except Exception as e:
+                logging.error('Error happens during resolving activity:', e)
     
     activity = _activityFactory.resolve_activity(None)
     return ActivityContext(activity)
